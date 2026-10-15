@@ -1,0 +1,53 @@
+﻿@model MiniMES.Web.Models.OrdemProducao
+@{
+    ViewData["Title"] = "Editar Ordem";
+}
+
+<h1>Editar Ordem</h1>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="DataCriacao" />
+            <div class="mb-3">
+                <label asp-for="Numero" class="form-label"></label>
+                <input asp-for="Numero" class="form-control" />
+                <span asp-validation-for="Numero" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Produto" class="form-label"></label>
+                <input asp-for="Produto" class="form-control" />
+                <span asp-validation-for="Produto" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="QuantidadePrevista" class="form-label"></label>
+                <input asp-for="QuantidadePrevista" class="form-control" />
+                <span asp-validation-for="QuantidadePrevista" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="QuantidadeProduzida" class="form-label"></label>
+                <input asp-for="QuantidadeProduzida" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="MaquinaId" class="form-label"></label>
+                <select asp-for="MaquinaId" class="form-select" asp-items="ViewBag.Maquinas"></select>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Status" class="form-label"></label>
+                <select asp-for="Status" class="form-select">
+                    <option value="Aberta">Aberta</option>
+                    <option value="EmProducao">Em Produção</option>
+                    <option value="Concluida">Concluída</option>
+                    <option value="Cancelada">Cancelada</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <a asp-action="Index" class="btn btn-secondary">Voltar</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

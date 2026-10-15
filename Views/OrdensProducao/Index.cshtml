@@ -1,0 +1,34 @@
+﻿@model IEnumerable<MiniMES.Web.Models.OrdemProducao>
+@{
+    ViewData["Title"] = "Ordens de Produção";
+}
+
+<h1>Ordens de Produção</h1>
+@if (TempData["Sucesso"] != null)
+{
+    <div class="alert alert-success">@TempData["Sucesso"]</div>
+}
+<p><a asp-action="Create" class="btn btn-primary">Nova Ordem</a></p>
+
+<table class="table table-striped">
+    <thead>
+        <tr><th>Número</th><th>Produto</th><th>Prev.</th><th>Prod.</th><th>Status</th><th>Máquina</th><th></th></tr>
+    </thead>
+    <tbody>
+        @foreach (var o in Model)
+        {
+            <tr>
+                <td>@o.Numero</td>
+                <td>@o.Produto</td>
+                <td>@o.QuantidadePrevista</td>
+                <td>@o.QuantidadeProduzida</td>
+                <td>@o.Status</td>
+                <td>@o.Maquina?.Nome</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@o.Id" class="btn btn-sm btn-warning">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@o.Id" class="btn btn-sm btn-danger">Excluir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

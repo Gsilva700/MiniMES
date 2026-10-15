@@ -1,0 +1,30 @@
+﻿@model IEnumerable<MiniMES.Web.Models.Apontamento>
+@{
+    ViewData["Title"] = "Apontamentos";
+}
+
+<h1>Apontamentos de Produção</h1>
+@if (TempData["Sucesso"] != null)
+{
+    <div class="alert alert-success">@TempData["Sucesso"]</div>
+}
+<p><a asp-action="Create" class="btn btn-primary">Novo Apontamento</a></p>
+
+<table class="table table-striped">
+    <thead>
+        <tr><th>Data</th><th>Ordem</th><th>Máquina</th><th>Operador</th><th>Boa</th><th>Refugo</th></tr>
+    </thead>
+    <tbody>
+        @foreach (var a in Model)
+        {
+            <tr>
+                <td>@a.DataInicio.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>@a.OrdemProducao?.Numero</td>
+                <td>@a.Maquina?.Nome</td>
+                <td>@a.Operador?.Nome</td>
+                <td>@a.QuantidadeBoa</td>
+                <td>@a.QuantidadeRefugo</td>
+            </tr>
+        }
+    </tbody>
+</table>

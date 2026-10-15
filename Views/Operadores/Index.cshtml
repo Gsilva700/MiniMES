@@ -1,0 +1,30 @@
+﻿@model IEnumerable<MiniMES.Web.Models.Operador>
+@{
+    ViewData["Title"] = "Operadores";
+}
+
+<h1>Operadores</h1>
+@if (TempData["Sucesso"] != null)
+{
+    <div class="alert alert-success">@TempData["Sucesso"]</div>
+}
+<p><a asp-action="Create" class="btn btn-primary">Novo Operador</a></p>
+
+<table class="table table-striped">
+    <thead><tr><th>Matrícula</th><th>Nome</th><th>Turno</th><th>Ativo</th><th></th></tr></thead>
+    <tbody>
+        @foreach (var op in Model)
+        {
+            <tr>
+                <td>@op.Matricula</td>
+                <td>@op.Nome</td>
+                <td>@op.Turno?.Nome</td>
+                <td>@(op.Ativo ? "Sim" : "Não")</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@op.Id" class="btn btn-sm btn-warning">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@op.Id" class="btn btn-sm btn-danger">Excluir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

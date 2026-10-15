@@ -1,0 +1,64 @@
+﻿@model MiniMES.Web.ViewModels.DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<h1>Indicadores de Produção</h1>
+
+<div class="row mt-4">
+    <div class="col-md-3">
+        <div class="card text-white bg-primary">
+            <div class="card-body"><h5>Total Produzido</h5><h2>@Model.TotalProduzido</h2></div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-danger">
+            <div class="card-body"><h5>Refugo</h5><h2>@Model.TotalRefugo</h2></div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-success">
+            <div class="card-body"><h5>Qualidade</h5><h2>@Model.Qualidade %</h2></div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-warning">
+            <div class="card-body"><h5>Paradas (min)</h5><h2>@Model.TotalParadas</h2></div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6"><canvas id="graficoProducao"></canvas></div>
+    <div class="col-md-6"><canvas id="graficoParadas"></canvas></div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const producao = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.ProducaoPorMaquina));
+        const paradas  = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.ParadasPorMotivo));
+
+        new Chart(document.getElementById('graficoProducao'), {
+            type: 'bar',
+            data: {
+                labels: producao.map(p => p.maquina),
+                datasets: [
+                    { label: 'Boa',    data: producao.map(p => p.boa),    backgroundColor: '#198754' },
+                    { label: 'Refugo', data: producao.map(p => p.refugo), backgroundColor: '#dc3545' }
+                ]
+            },
+            options: { responsive: true, plugins: { title: { display: true, text: 'Produção por Máquina' } } }
+        });
+
+        new Chart(document.getElementById('graficoParadas'), {
+            type: 'doughnut',
+            data: {
+                labels: paradas.map(p => p.motivo),
+                datasets: [{ data: paradas.map(p => p.minutos),
+                    backgroundColor: ['#0d6efd','#6c757d','#ffc107','#dc3545','#198754'] }]
+            },
+            options: { plugins: { title: { display: true, text: 'Paradas por Motivo (min)' } } }
+        });
+    </script>
+}
