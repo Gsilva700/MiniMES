@@ -20,6 +20,16 @@ O MiniMES simula uma fábrica de autopeças com três máquinas (Torno CNC, Fres
 5. É hospedado no IIS com SQL Server como banco de dados
 
 ---
+## 📸 Screenshots
+
+### Dashboard de Indicadores
+![Dashboard](docs/dashboard.png)
+
+### Cadastro de Operadores
+![Operadores](docs/operadores.png)
+
+### Apontamentos de Produção
+![Apontamentos](docs/apontamentos.png)
 
 ## Funcionalidades
 
