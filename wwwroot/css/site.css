@@ -1,0 +1,53 @@
+/* Fundo global moderno */
+body {
+    background-color: #f4f7f6;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Efeito hover suave nos cards */
+.card {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+/* Ajuste nas tabelas */
+.table {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,.075);
+}
+.table thead th {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+    font-weight: 600;
+    color: #495057;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+.table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* Navbar mais elegante */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,.08);
+    background-color: #ffffff !important;
+}
+.navbar-brand {
+    font-weight: 700;
+    color: #0d6efd !important;
+    font-size: 1.25rem;
+}
+.nav-link {
+    font-weight: 500;
+    color: #495057 !important;
+    transition: color 0.2s;
+}
+.nav-link:hover {
+    color: #0d6efd !important;
+}

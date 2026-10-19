@@ -1,0 +1,41 @@
+﻿@model MiniMES.Web.Models.Operador
+@{
+    ViewData["Title"] = "Editar Operador";
+}
+
+<h1>Editar Operador</h1>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="mb-3">
+                <label asp-for="Nome" class="form-label"></label>
+                <input asp-for="Nome" class="form-control" />
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Matricula" class="form-label"></label>
+                <input asp-for="Matricula" class="form-control" />
+                <span asp-validation-for="Matricula" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="TurnoId" class="form-label"></label>
+                <select asp-for="TurnoId" class="form-select" asp-items="ViewBag.Turnos">
+                    <option value="">-- Selecione --</option>
+                </select>
+                <span asp-validation-for="TurnoId" class="text-danger"></span>
+            </div>
+            <div class="form-check mb-3">
+                <input asp-for="Ativo" class="form-check-input" />
+                <label asp-for="Ativo" class="form-check-label"></label>
+            </div>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <a asp-action="Index" class="btn btn-secondary">Voltar</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

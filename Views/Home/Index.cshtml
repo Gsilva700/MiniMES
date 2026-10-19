@@ -1,0 +1,88 @@
+﻿@model MiniMES.Web.ViewModels.DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<h1>Indicadores de Produção</h1>
+
+<div class="row mt-4 g-4">
+    <div class="col-md-3">
+        <div class="card text-white bg-primary shadow-sm border-0 rounded-4 h-100">
+            <div class="card-body">
+                <h6 class="text-uppercase fw-light mb-1">📦 Total Produzido</h6>
+                <h2 class="display-6 fw-bold mb-0">@Model.TotalProduzido</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-danger shadow-sm border-0 rounded-4 h-100">
+            <div class="card-body">
+                <h6 class="text-uppercase fw-light mb-1">⚠️ Refugo</h6>
+                <h2 class="display-6 fw-bold mb-0">@Model.TotalRefugo</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-success shadow-sm border-0 rounded-4 h-100">
+            <div class="card-body">
+                <h6 class="text-uppercase fw-light mb-1">✅ Qualidade</h6>
+                <h2 class="display-6 fw-bold mb-0">@Model.Qualidade %</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-dark bg-warning shadow-sm border-0 rounded-4 h-100">
+            <div class="card-body">
+                <h6 class="text-uppercase fw-light mb-1">🛑 Paradas (min)</h6>
+                <h2 class="display-6 fw-bold mb-0">@Model.TotalParadas</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4 g-4">
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0 rounded-4 p-3">
+            <div style="height: 300px;">
+                <canvas id="graficoProducao"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0 rounded-4 p-3">
+            <div style="height: 300px;">
+                <canvas id="graficoParadas"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/chart.js"></script>
+     <script>
+        const producao = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.ProducaoPorMaquina));
+        const paradas  = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.ParadasPorMotivo));
+
+        new Chart(document.getElementById('graficoProducao'), {
+            type: 'bar',
+            data: {
+                labels: producao.map(p => p.Maquina), // MUDOU AQUI (Maiúsculo)
+                datasets: [
+                    { label: 'Boa',    data: producao.map(p => p.Boa),    backgroundColor: '#198754' }, // MUDOU AQUI
+                    { label: 'Refugo', data: producao.map(p => p.Refugo), backgroundColor: '#dc3545' }  // MUDOU AQUI
+                ]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { title: { display: true, text: 'Produção por Máquina' } } }
+        });
+
+        new Chart(document.getElementById('graficoParadas'), {
+            type: 'doughnut',
+            data: {
+                labels: paradas.map(p => p.Motivo), // MUDOU AQUI
+                datasets: [{ data: paradas.map(p => p.Minutos), // MUDOU AQUI
+                    backgroundColor: ['#0d6efd','#6c757d','#ffc107','#dc3545','#198754'] }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { title: { display: true, text: 'Paradas por Motivo (min)' } } }
+        });
+    </script>
+}

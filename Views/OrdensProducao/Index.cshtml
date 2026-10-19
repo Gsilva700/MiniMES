@@ -1,0 +1,37 @@
+﻿@model IEnumerable<MiniMES.Web.Models.OrdemProducao>
+@{ ViewData["Title"] = "Ordens de Produção"; }
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold mb-0">Ordens de Produção</h2>
+    <a asp-action="Create" class="btn btn-primary rounded-pill px-4">+ Nova Ordem</a>
+</div>
+
+@if (TempData["Sucesso"] != null) { <div class="alert alert-success alert-dismissible fade show rounded-3">@TempData["Sucesso"] <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div> }
+
+<div class="table-responsive">
+    <table class="table table-hover align-middle">
+        <thead>
+            <tr><th>Número</th><th>Produto</th><th>Qtd (Prev/Prod)</th><th>Máquina</th><th>Status</th><th class="text-end">Ações</th></tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="fw-bold text-secondary">@item.Numero</td>
+                <td>@item.Produto</td>
+                <td>@item.QuantidadePrevista / <span class="text-success fw-bold">@item.QuantidadeProduzida</span></td>
+                <td>@item.Maquina?.Nome</td>
+                <td>
+                    @if(item.Status == "Concluida") { <span class="badge bg-success rounded-pill px-3">Concluída</span> }
+                    else if(item.Status == "EmProducao") { <span class="badge bg-primary rounded-pill px-3">Em Produção</span> }
+                    else { <span class="badge bg-warning text-dark rounded-pill px-3">Aberta</span> }
+                </td>
+                <td class="text-end">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary rounded-pill px-3">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger rounded-pill px-3">Excluir</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

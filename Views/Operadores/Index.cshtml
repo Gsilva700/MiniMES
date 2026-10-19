@@ -1,0 +1,49 @@
+﻿@model IEnumerable<MiniMES.Web.Models.Operador>
+@{ ViewData["Title"] = "Operadores"; }
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold mb-0">Gerenciar Operadores</h2>
+    <a asp-action="Create" class="btn btn-primary rounded-pill px-4">+ Novo Operador</a>
+</div>
+
+@if (TempData["Sucesso"] != null) { 
+    <div class="alert alert-success alert-dismissible fade show rounded-3" role="alert">
+        @TempData["Sucesso"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div> 
+}
+
+<div class="table-responsive">
+    <table class="table table-hover align-middle">
+        <thead>
+            <tr>
+                <th>Matrícula</th>
+                <th>Nome</th>
+                <th>Turno</th>
+                <th>Status</th>
+                <th class="text-end">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var op in Model)
+        {
+            <tr>
+                <td class="fw-bold text-secondary">@op.Matricula</td>
+                <td>@op.Nome</td>
+                <td>@op.Turno?.Nome</td>
+                <td>
+                    @if(op.Ativo) {
+                        <span class="badge bg-success rounded-pill px-3">Ativo</span>
+                    } else {
+                        <span class="badge bg-danger rounded-pill px-3">Inativo</span>
+                    }
+                </td>
+                <td class="text-end">
+                    <a asp-action="Edit" asp-route-id="@op.Id" class="btn btn-sm btn-outline-primary rounded-pill px-3">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@op.Id" class="btn btn-sm btn-outline-danger rounded-pill px-3">Excluir</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

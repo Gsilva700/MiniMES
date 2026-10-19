@@ -1,0 +1,48 @@
+﻿@model MiniMES.Web.Models.Apontamento
+@{
+    ViewData["Title"] = "Novo Apontamento";
+}
+
+<h1>Novo Apontamento</h1>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="mb-3">
+                <label asp-for="OrdemProducaoId" class="form-label"></label>
+                <select asp-for="OrdemProducaoId" class="form-select" asp-items="ViewBag.Ordens">
+                    <option value="">-- Selecione --</option>
+                </select>
+                <span asp-validation-for="OrdemProducaoId" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="MaquinaId" class="form-label"></label>
+                <select asp-for="MaquinaId" class="form-select" asp-items="ViewBag.Maquinas">
+                    <option value="">-- Selecione --</option>
+                </select>
+                <span asp-validation-for="MaquinaId" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="OperadorId" class="form-label"></label>
+                <select asp-for="OperadorId" class="form-select" asp-items="ViewBag.Operadores">
+                    <option value="">-- Selecione --</option>
+                </select>
+                <span asp-validation-for="OperadorId" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="QuantidadeBoa" class="form-label"></label>
+                <input asp-for="QuantidadeBoa" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="QuantidadeRefugo" class="form-label"></label>
+                <input asp-for="QuantidadeRefugo" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <a asp-action="Index" class="btn btn-secondary">Voltar</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
